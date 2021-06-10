@@ -9,7 +9,7 @@ const style = size =>
       width: size,
       height: size,
       justifyContent: 'center',
-      margin: 20,
+      margin: 10,
     },
     text: {
       fontSize: size / 3,

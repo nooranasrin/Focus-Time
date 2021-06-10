@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import styles from './App.styles';
-import Focus from './src/components/Focus/Focus';
+import Focus from './src/components/focus/Focus';
 
 export default function App() {
   return (
