@@ -8,7 +8,7 @@ const Focus = () => {
   const [focusItem, setFocusItem] = useState('');
 
   if (focusItem) {
-    return <Timer focusItem={focusItem} />;
+    return <Timer focusItem={focusItem} onEnd={() => setFocusItem(null)} />;
   }
 
   return (

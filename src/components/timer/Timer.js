@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { ProgressBar } from 'react-native-paper';
 import { useKeepAwake } from 'expo-keep-awake';
-import { View, Text } from 'react-native';
+import { View, Text, Vibration } from 'react-native';
 import Counter from '../couter/Counter';
 import style from './Timer.styles';
 import focusStyle from '../focus/Focus.styles';
 import RoundedButton from '../roundedButton/RoundedButton';
 
-const getTimeButtons = (times, reset, setTime) =>
+const getTimeButtons = (times, setProgress, setIsPaused, setTime) =>
   times.map(count => (
     <RoundedButton
       onPress={() => {
         setTime(count);
-        reset();
+        setProgress(1);
+        setIsPaused(true);
       }}
       extraStyle={focusStyle.button(70)}
       text={count}
@@ -20,18 +21,20 @@ const getTimeButtons = (times, reset, setTime) =>
     />
   ));
 
-const reset = (setProgress, setIsPaused) => () => {
+const reset = (setProgress, setIsPaused, onEnd) => () => {
   setProgress(1);
   setIsPaused(true);
+  Vibration.vibrate(3000);
+  onEnd();
 };
 
-const Timer = ({ focusItem }) => {
+const Timer = ({ focusItem, onEnd }) => {
   useKeepAwake();
   const [isPaused, setIsPaused] = useState(true);
   const [progress, setProgress] = useState(1);
   const [time, setTime] = useState(0.1);
 
-  const resetTimer = reset(setProgress, setIsPaused);
+  const resetTimer = reset(setProgress, setIsPaused, onEnd);
 
   return (
     <View style={style.timer}>
@@ -45,7 +48,7 @@ const Timer = ({ focusItem }) => {
         Focusing On : <Text style={style.task}>{focusItem}</Text>
       </Text>
       <View style={focusStyle.row}>
-        {getTimeButtons([5, 10, 15], resetTimer, setTime)}
+        {getTimeButtons([5, 10, 15], setProgress, setIsPaused, setTime)}
       </View>
       <ProgressBar
         style={style.progressBar}

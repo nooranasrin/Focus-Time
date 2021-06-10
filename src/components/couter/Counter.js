@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Vibration } from 'react-native';
+import { View, Text } from 'react-native';
 import style from './Counter.styles';
 
 const minToMillis = min => min * 1000 * 60;
@@ -11,7 +11,6 @@ const countTime = (setTime, setProgress, minutes, reset) => {
     if (time === 0) {
       setTime(minToMillis(minutes));
       reset();
-      Vibration.vibrate(3000);
       return time;
     }
     const timeLeft = time - 1000;
