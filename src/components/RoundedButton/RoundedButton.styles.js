@@ -12,7 +12,7 @@ const style = size =>
       margin: 10,
     },
     text: {
-      fontSize: size / 3,
+      fontSize: size / 3.2,
       color: 'white',
       textAlign: 'center',
     },

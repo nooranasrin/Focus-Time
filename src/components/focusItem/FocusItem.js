@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput } from 'react-native';
+import { View } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import style from './FocusItem.styles';
 import RoundedButton from '../roundedButton/RoundedButton';
 
@@ -11,7 +12,9 @@ const FocusItem = ({ row, button, onChange }) => {
       <TextInput
         value={focusItem}
         onChangeText={setFocusItem}
+        selectionColor='black'
         style={style.focusInput}
+        theme={{ colors: { primary: 'white' } }}
       />
       <RoundedButton
         text={button.text}

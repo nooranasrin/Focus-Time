@@ -11,10 +11,17 @@ const style = StyleSheet.create({
     fontSize: 20,
   },
   timer: {
-    width: '70%',
-    flex: 0.6,
+    width: '100%',
+    flex: 1,
     justifyContent: 'space-evenly',
   },
+  buttonContainer: {
+    alignSelf: 'center',
+  },
+  progressBar: {
+    height: 7,
+  },
+  button: margin => ({ marginTop: margin }),
 });
 
 export default style;
