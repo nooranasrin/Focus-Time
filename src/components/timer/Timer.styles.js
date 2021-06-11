@@ -17,10 +17,10 @@ const style = StyleSheet.create({
   },
   buttonContainer: {
     alignSelf: 'center',
+    marginTop: 50,
   },
-  progressBar: {
-    height: 7,
-  },
+  row: { flexDirection: 'row', justifyContent: 'space-between' },
+  cancelButton: {},
   button: margin => ({ marginTop: margin }),
 });
 

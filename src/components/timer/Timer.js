@@ -2,28 +2,14 @@ import React, { useState } from 'react';
 import { ProgressBar } from 'react-native-paper';
 import { useKeepAwake } from 'expo-keep-awake';
 import { View, Text, Vibration } from 'react-native';
-import Counter from '../couter/Counter';
+import Counter from '../counter/Counter';
 import style from './Timer.styles';
-import focusStyle from '../focus/Focus.styles';
 import RoundedButton from '../roundedButton/RoundedButton';
+import RoundedButtons from '../roundedButton/RoundedButtons';
+import { reset, getTimes, getActionItems } from '../../helper';
 
-const getTimeButtons = (times, setProgress, setIsPaused, setTime) =>
-  times.map(count => (
-    <RoundedButton
-      onPress={() => {
-        setTime(count);
-        setProgress(1);
-        setIsPaused(true);
-      }}
-      extraStyle={focusStyle.button(70)}
-      text={count}
-      size={70}
-    />
-  ));
-
-const reset = (setProgress, setIsPaused, onEnd) => () => {
-  setProgress(1);
-  setIsPaused(true);
+const stop = (resetTimer, onEnd) => {
+  resetTimer();
   Vibration.vibrate(3000);
   onEnd();
 };
@@ -31,10 +17,29 @@ const reset = (setProgress, setIsPaused, onEnd) => () => {
 const Timer = ({ focusItem, onEnd }) => {
   useKeepAwake();
   const [isPaused, setIsPaused] = useState(true);
+  const [isReset, setIsReset] = useState(false);
   const [progress, setProgress] = useState(1);
   const [time, setTime] = useState(0.1);
 
-  const resetTimer = reset(setProgress, setIsPaused, onEnd);
+  const resetTimer = reset(setProgress, setIsPaused, setIsReset);
+
+  const actions = [
+    {
+      text: 'Stop',
+      onPress: () => {
+        setIsReset(true);
+        onEnd();
+      },
+    },
+    {
+      text: 'Reset',
+      onPress: () => {
+        resetTimer();
+        setIsReset(true);
+      },
+    },
+  ];
+  const actionItems = getActionItems(style.cancelButton, 80, actions);
 
   return (
     <View style={style.timer}>
@@ -42,25 +47,25 @@ const Timer = ({ focusItem, onEnd }) => {
         minutes={time}
         isPaused={isPaused}
         setProgress={setProgress}
-        reset={resetTimer}
+        stop={() => stop(resetTimer, onEnd)}
+        isReset={isReset}
       />
       <Text style={style.title}>
         Focusing On : <Text style={style.task}>{focusItem}</Text>
       </Text>
-      <View style={focusStyle.row}>
-        {getTimeButtons([5, 10, 15], setProgress, setIsPaused, setTime)}
-      </View>
-      <ProgressBar
-        style={style.progressBar}
-        progress={progress}
-        color={'rgb(200, 42, 66)'}
-      />
+      <RoundedButtons items={getTimes([10, 15, 20], resetTimer, setTime)} />
+      <ProgressBar progress={progress} color={'rgb(200, 42, 66)'} />
       <RoundedButton
         extraStyle={style.buttonContainer}
         size={130}
         text={isPaused ? 'Start' : 'Pause'}
-        onPress={() => (isPaused ? setIsPaused(false) : setIsPaused(true))}
+        onPress={() => {
+          isPaused
+            ? setIsPaused(false)
+            : setIsPaused(true) && setIsReset(false);
+        }}
       />
+      <RoundedButtons items={actionItems} />
     </View>
   );
 };

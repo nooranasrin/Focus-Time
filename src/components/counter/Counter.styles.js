@@ -8,7 +8,8 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 8,
     alignSelf: 'center',
-    marginTop: 60,
+    marginTop: 80,
+    marginBottom: 40,
   },
   time: {
     textAlign: 'center',

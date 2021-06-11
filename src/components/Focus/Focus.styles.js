@@ -11,8 +11,8 @@ const style = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    marginBottom: 40,
   },
   button: margin => ({ marginTop: margin }),
 });
