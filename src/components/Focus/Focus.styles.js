@@ -14,6 +14,9 @@ const style = StyleSheet.create({
     justifyContent: 'space-around',
     marginBottom: 40,
   },
+  clear: {
+    marginTop: 30
+  },
   button: margin => ({ marginTop: margin }),
 });
 
