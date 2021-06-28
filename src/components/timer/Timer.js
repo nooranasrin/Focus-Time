@@ -6,7 +6,7 @@ import Counter from '../counter/Counter';
 import style from './Timer.styles';
 import RoundedButton from '../roundedButton/RoundedButton';
 import RoundedButtons from '../roundedButton/RoundedButtons';
-import {reset, getTimes, getActionItems} from '../../helper';
+import {reset, getTimes, getActions} from '../../helper';
 
 const stop = (resetTimer, onEnd, setFocusHistory) => {
   setFocusHistory();
@@ -23,24 +23,7 @@ const Timer = ({focusItem, onEnd, setFocusHistory}) => {
   const [time, setTime] = useState(0.1);
 
   const resetTimer = reset(setProgress, setIsPaused, setIsReset);
-
-  const actions = [
-    {
-      text: 'Stop',
-      onPress: () => {
-        setIsReset(true);
-        onEnd();
-      },
-    },
-    {
-      text: 'Reset',
-      onPress: () => {
-        resetTimer();
-        setIsReset(true);
-      },
-    },
-  ];
-  const actionItems = getActionItems(style.cancelButton, 80, actions);
+  const actionItems = getActions(setIsReset, onEnd, resetTimer, style.cancelButton, 80);
 
   return (
     <View style={style.timer}>

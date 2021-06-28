@@ -41,11 +41,31 @@ const getTimes = (times, resetTimer, setTime) => {
   }));
 };
 
-const getActionItems = (style, size, items) => {
+const formatActions = (style, size, items) => {
   return items.map(item => {
     return { onPress: item.onPress, text: item.text, style, size };
   });
 };
+
+const getActions = (setIsReset, onEnd, resetTimer, style, size) => {
+  const actions = [
+    {
+      text: 'Stop',
+      onPress: () => {
+        setIsReset(true);
+        onEnd();
+      },
+    },
+    {
+      text: 'Reset',
+      onPress: () => {
+        resetTimer();
+        setIsReset(true);
+      },
+    },
+  ];
+  return formatActions(style, size, actions);
+}
 
 export {
   minToMillis,
@@ -53,5 +73,5 @@ export {
   getRemainingTime,
   reset,
   getTimes,
-  getActionItems,
+  getActions,
 };
