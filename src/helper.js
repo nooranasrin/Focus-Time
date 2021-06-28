@@ -2,15 +2,13 @@ const minToMillis = min => min * 1000 * 60;
 
 const formatTime = time => (time < 10 ? `0${time}` : time);
 
-const countTime = (setTime, setProgress, minutes, stopTimer) => {
+const countTime = (setTime, minutes) => {
   setTime(time => {
     if (time === 0) {
       setTime(minToMillis(minutes));
-      stopTimer();
       return time;
     }
     const timeLeft = time - 1000;
-    setProgress(timeLeft / minToMillis(minutes));
     return timeLeft;
   });
 };
